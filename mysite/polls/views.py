@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse
 from django.template import loader 
@@ -17,7 +17,11 @@ def index(request):
 
 # The Detail view
 def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist") # possible squiggly line showing nonexistence in pylance
+    return render(request, "polls/detail.html", {"question": question})
 
 # The Results view
 def results(request, question_id):
