@@ -11,8 +11,9 @@ from .models import Choice, Question
 # The Index view
 # Initially we used the template loader before 
 # implementing the shortcut using render() function
-# Now we switched to using Django's Generic Views
+# Now we switched to using Django's Generic Views, which are class based views
 
+# The Index view (class based)
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
@@ -21,15 +22,15 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.order_by("-pub_date")[:5]
 
-# The Detail view
+# The Detail view (class based)
 class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
 
-# The Results view
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/results.html", {"question": question})
+# The Results view (class based)
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = "polls/results.html"
 
 # The vote view
 def vote(request, question_id):
