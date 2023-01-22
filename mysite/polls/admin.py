@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question
+from .models import Choice, Question
 
 # Customizing the default admin form
 class QuestionAdmin(admin.ModelAdmin):
@@ -12,6 +12,6 @@ class QuestionAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Question, QuestionAdmin)
 
-
+admin.site.register(Choice)
 
 
